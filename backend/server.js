@@ -1,3 +1,5 @@
+console.log("SERVER FILE LOADED");
+
 require("dotenv").config(); //load database url
 const express = require("express");
 const cors = require("cors");
@@ -15,9 +17,9 @@ app.get("/", (req, res) => {
 });
 
 // import routes
-app.use("/users", require("./routes/users"));
-app.use("/decks", require("./routes/decks"));
-app.use("/cards", require("./routes/cards"));
+app.use("/users", require("./routes/users.js"));
+app.use("/decks", require("./routes/decks.js"));
+app.use("/cards", require("./routes/cards.js"));
 
 // start server
 app.listen(PORT, () => {
