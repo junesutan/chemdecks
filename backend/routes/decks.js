@@ -1,12 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
-const { createDeck } = require("../controllers/decksController");
+const { getDecks, createDeck } = require("../controllers/decksController");
 
 router.post("/", auth, createDeck);
 
-router.get("/", (req, res) => {
-  res.send("Decks route working");
-});
+router.get("/", auth, getDecks);
 
 module.exports = router;
