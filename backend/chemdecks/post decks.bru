@@ -1,0 +1,22 @@
+meta {
+  name: post decks
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:3000/decks
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Organic Chemistry"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
