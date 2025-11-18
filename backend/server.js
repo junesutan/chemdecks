@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 });
 
 // import routes
-app.use("/users", require("./routes/users.js"));
+app.use("/users", require("./routes/users"));
 app.use("/decks", require("./routes/decks.js"));
 app.use("/cards", require("./routes/cards.js"));
 
