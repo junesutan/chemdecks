@@ -1,23 +1,17 @@
 meta {
-  name: post decks
+  name: users register
   type: http
   seq: 4
 }
 
-post {
-  url: http://localhost:3000/decks
+delete {
+  url: http://localhost:3000/decks/18
   body: json
   auth: inherit
 }
 
 headers {
   Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqdW5lQGV4YW1wbGUuY29tIiwiaWF0IjoxNzYzNDU3MzUzLCJleHAiOjE3NjM1NDM3NTN9.u0LImOo3S6L59sHJY8iD_xOO6RcQqiYtyUoLO22B_a4
-}
-
-body:json {
-  {
-    "title": "Organic Chemistry"
-  }
 }
 
 settings {
