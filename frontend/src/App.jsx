@@ -4,6 +4,7 @@ import StudentDashboard from "./pages/StudentDashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CreateDeck from "./pages/CreateDeck";
+import CreateCards from "./pages/CreateCards";
 
 function App() {
   return (
@@ -37,6 +38,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route path="/decks/:deckId/cards" element={<CreateCards />} />
       </Routes>
     </BrowserRouter>
   );

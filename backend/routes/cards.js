@@ -9,13 +9,13 @@ const {
   deleteCard,
 } = require("../controllers/cardsController");
 
-// Create a card in a deck
+// Create one card in a deck
 router.post("/:deckId", auth, createCard);
 
 // Get all cards in a deck
 router.get("/deck/:deckId", auth, getCardsByDeck);
 
-// Get one card
+// Get single card
 router.get("/:id", auth, getCardById);
 
 // Update card

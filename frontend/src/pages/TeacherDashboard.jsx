@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function TeacherDashboard() {
   console.log("🔵 TeacherDashboard RENDERED");
 
+  const navigate = useNavigate(); // ✅ Correct place
   const [decks, setDecks] = useState([]);
   const token = localStorage.getItem("token");
 
-  // load all decks created by the teacher
+  // Load decks
   useEffect(() => {
     async function fetchDecks() {
       const res = await fetch("http://localhost:3000/decks", {
@@ -36,6 +38,7 @@ export default function TeacherDashboard() {
       </h1>
 
       <button
+        onClick={() => navigate("/create-deck")}
         style={{
           padding: "12px 20px",
           fontSize: "18px",
