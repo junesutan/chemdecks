@@ -43,7 +43,7 @@ exports.loginUser = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ error: "Invalid password" });
     }
-
+    //
     // 3. create JWT
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
