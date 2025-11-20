@@ -1,16 +1,42 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router";
 import LoginPage from "./pages/LoginPage";
-import DecksPage from "./pages/DecksPage";
-import TeacherPage from "./pages/TeacherPage";
-import StudentPage from "./pages/StudentPage";
+import StudentDashboard from "./pages/StudentDashboard";
+import TeacherDashboard from "./pages/TeacherDashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
+import CreateDeck from "./pages/CreateDeck";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/teacher" element={<TeacherPage />} />
-        <Route path="/student" element={<StudentPage />} />
+
+        <Route
+          path="/student"
+          element={
+            <ProtectedRoute allowedRole="student">
+              <StudentDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/teacher"
+          element={
+            <ProtectedRoute allowedRole="teacher">
+              <TeacherDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/create-deck"
+          element={
+            <ProtectedRoute allowedRole="teacher">
+              <CreateDeck />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

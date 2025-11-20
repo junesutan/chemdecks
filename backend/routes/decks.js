@@ -9,6 +9,11 @@ const {
   deleteDeck,
 } = require("../controllers/decksController");
 
+router.get("/", async (req, res) => {
+  const result = await pool.query("SELECT * FROM decks");
+  res.json(result.rows);
+});
+
 router.post("/", auth, createDeck);
 
 router.get("/", auth, getDecks);

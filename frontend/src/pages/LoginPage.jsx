@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 function LoginPage() {
+  console.log("LOGIN PAGE RENDERED");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const login = async (e) => {
     e.preventDefault();
-
+    console.log("LOGIN FUNCTION STARTED");
     const res = await fetch("http://localhost:3000/users/login", {
       method: "POST",
       headers: {
@@ -18,6 +19,10 @@ function LoginPage() {
     });
 
     const data = await res.json();
+
+    console.log("LOGIN RESPONSE:", data);
+    console.log("ROLE FROM BACKEND:", data.role);
+    console.log("TOKEN FROM BACKEND:", data.token);
 
     if (res.ok) {
       localStorage.setItem("token", data.token);

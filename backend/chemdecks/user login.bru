@@ -4,10 +4,22 @@ meta {
   seq: 2
 }
 
-get {
-  url: http://localhost:3000/users
-  body: none
+post {
+  url: http://localhost:3000/decks
+  body: json
   auth: inherit
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoidGltQHNjaG9vbC5jb20iLCJyb2xlIjoidGVhY2hlciIsImlhdCI6MTc2MzYzNTc1MiwiZXhwIjoxNzYzNzIyMTUyfQ.KulbJSB8TixJTZkOetKMm2NIzLvJoOphx4QmJ7DGu84
+}
+
+body:json {
+  {
+    "title": "chemical equilibrium",
+    "description": "understanding le charteliers principle"
+  }
+  
 }
 
 settings {

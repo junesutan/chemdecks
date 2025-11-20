@@ -15,12 +15,14 @@ exports.getDecks = async (req, res) => {
 };
 
 exports.createDeck = async (req, res) => {
-  const { title } = req.body;
+  const { title, description } = req.body;
   const userId = req.user.id;
 
   const result = await pool.query(
-    "INSERT INTO decks (title, user_id) VALUES ($1, $2) RETURNING *",
-    [title, userId]
+    `INSERT INTO decks (user_id, title, description)
+       VALUES ($1, $2, $3)
+       RETURNING id, user_id, title, description`,
+    [userId, title, description]
   );
 
   res.json(result.rows[0]);
