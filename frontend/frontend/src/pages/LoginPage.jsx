@@ -21,9 +21,13 @@ function LoginPage() {
 
     if (res.ok) {
       localStorage.setItem("token", data.token);
-      navigate("/decks");
-    } else {
-      alert(data.error || "Login failed");
+      localStorage.setItem("role", data.role);
+
+      if (data.role === "teacher") {
+        navigate("/teacher");
+      } else {
+        navigate("/student");
+      }
     }
   };
 
