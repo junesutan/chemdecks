@@ -1,10 +1,11 @@
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import StudentDashboard from "./pages/StudentDashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CreateDeck from "./pages/CreateDeck";
-import CreateCards from "./pages/CreateCards";
+import CreateCards from "./pages/CreateCardsPage";
+import SolveCardPage from "./pages/StudentSolveCardPage";
 
 function App() {
   return (
@@ -40,6 +41,15 @@ function App() {
         />
 
         <Route path="/decks/:deckId/cards" element={<CreateCards />} />
+
+        <Route
+          path="/solve"
+          element={
+            <ProtectedRoute allowedRole="student">
+              <SolveCardPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

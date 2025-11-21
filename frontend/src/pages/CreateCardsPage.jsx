@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-export default function AddCards() {
+export default function CreateCards() {
   const { deckId } = useParams();
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   // Deck info
   const [deck, setDeck] = useState(null);
@@ -20,12 +21,19 @@ export default function AddCards() {
   // Fetch deck title & description
   useEffect(() => {
     async function fetchDeck() {
-      const res = await fetch(`http://localhost:3000/decks/${deckId}`);
+      const res = await fetch(`http://localhost:3000/decks/${deckId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = await res.json();
+      console.log("data: ", data);
       setDeck(data);
     }
     fetchDeck();
-  }, [deckId]);
+  }, [deckId, token]);
 
   function handleChange(index, field, value) {
     const updated = [...cards];

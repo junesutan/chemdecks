@@ -26,7 +26,7 @@ function LoginPage() {
 
     if (res.ok) {
       localStorage.setItem("token", data.token);
-      localStorage.setItem("role", data.role);
+      localStorage.setItem("role", data.role); //@JS to remove in the future
 
       if (data.role === "teacher") {
         navigate("/teacher");

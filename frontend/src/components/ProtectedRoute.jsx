@@ -1,30 +1,15 @@
-import { useEffect, useState } from "react";
 import { Navigate } from "react-router";
 
 export default function ProtectedRoute({ children, allowedRole }) {
-  const [loading, setLoading] = useState(true);
-
   const token = localStorage.getItem("token");
   const storedRole = localStorage.getItem("role");
 
-  useEffect(() => {
-    console.log("UE");
-
-    if (!token) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setLoading(true);
-      return;
-    }
-    if (storedRole !== allowedRole) {
-      setLoading(true);
-      return;
-    }
-    setLoading(false);
-  }, [storedRole, token, allowedRole]);
-
-  if (loading) return <h1>Loading</h1>;
-
+  // 1. No token → redirect to login
   if (!token) return <Navigate to="/" />;
 
+  // 2. Wrong role → redirect away
+  if (storedRole !== allowedRole) return <Navigate to="/" />;
+
+  // 3. If everything is correct → render children
   return children;
 }

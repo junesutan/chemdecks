@@ -17,12 +17,24 @@ export default function TeacherDashboard() {
         },
       });
 
+      if (!res.ok) {
+        console.log("Failed to fetch decks:", res.status);
+        setDecks([]);
+        return;
+      }
+
       const data = await res.json();
-      setDecks(data);
+
+      if (Array.isArray(data)) {
+        setDecks(data);
+      } else {
+        console.log("Not an array:", data);
+        setDecks([]);
+      }
     }
 
-    fetchDecks();
-  }, []);
+    if (token) fetchDecks();
+  }, [token]);
 
   return (
     <div

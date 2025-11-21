@@ -9,7 +9,9 @@ export default function CreateDeck() {
   async function handleSubmit(e) {
     e.preventDefault();
     const token = localStorage.getItem("token");
-
+    console.log("token: ", token);
+    console.log("title: ", title);
+    console.log("description: ", description);
     const res = await fetch("http://localhost:3000/decks", {
       method: "POST",
       headers: {

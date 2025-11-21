@@ -1,0 +1,20 @@
+meta {
+  name: retrieve decks
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost:3000/decks
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoidGltQHNjaG9vbC5jb20iLCJyb2xlIjoidGVhY2hlciIsImlhdCI6MTc2MzY5MDE5MCwiZXhwIjoxNzYzNzc2NTkwfQ.XeaKidDBOt3PcndkLwbKOEcKXF5J7qQ0X6JJ8OfEPFY
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
