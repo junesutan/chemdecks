@@ -46,10 +46,12 @@ export default function StudyPage() {
   };
 
   return (
-    <div>
+    <div style={{ outline: "solid" }}>
       {/* TOP BAR */}
       <div>
-        <button onClick={skipCard}>skip</button>
+        <button onClick={skipCard} style={{ margin: "10px" }}>
+          skip
+        </button>
 
         {showAnswer && <button onClick={nextCard}>next</button>}
       </div>
@@ -57,10 +59,12 @@ export default function StudyPage() {
       {/* MAIN CONTENT */}
       <div>
         {/* QUESTION BOX */}
-        <div>
+        <div style={{ margin: "10px" }}>
           {parts[0]}
           {showAnswer ? (
-            <strong>{card.answer}</strong>
+            <strong style={{ textDecoration: "underline" }}>
+              {card.answer}
+            </strong>
           ) : (
             <input
               type="text"
@@ -73,8 +77,11 @@ export default function StudyPage() {
 
         {/* SHOW ANSWER BUTTON */}
         {!showAnswer && (
-          <button onClick={() => setShowAnswer(true)} style={{}}>
-            show answer
+          <button
+            onClick={() => setShowAnswer(true)}
+            style={{ margin: "10px" }}
+          >
+            submit
           </button>
         )}
 

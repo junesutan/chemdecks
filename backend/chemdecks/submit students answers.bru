@@ -1,0 +1,33 @@
+meta {
+  name: submit students answers
+  type: http
+  seq: 7
+}
+
+post {
+  url: http://localhost:3000/responses
+  body: json
+  auth: inherit
+}
+
+params:query {
+  : 
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqdW5lQGdtYWlsLmNvbSIsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNzYzNzA4NzY5LCJleHAiOjE3NjM3OTUxNjl9.2hvkUdbC6l-2x9jbrGSzbaWhgmZtZWbvX-WVYjN5-OA
+}
+
+body:json {
+  {
+    "card_id": 2,
+    "deck_id": 33,
+    "student_answer": "58.5",
+    "is_correct": true
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
