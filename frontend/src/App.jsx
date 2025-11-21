@@ -5,7 +5,6 @@ import TeacherDashboard from "./pages/TeacherDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CreateDeck from "./pages/CreateDeck";
 import CreateCards from "./pages/CreateCardsPage";
-import SolveCardPage from "./pages/StudentSolveCardPage";
 import StudyPage from "./pages/StudyPage";
 
 function App() {
@@ -42,15 +41,6 @@ function App() {
         />
 
         <Route path="/decks/:deckId/cards" element={<CreateCards />} />
-
-        <Route
-          path="/solve"
-          element={
-            <ProtectedRoute allowedRole="student">
-              <SolveCardPage />
-            </ProtectedRoute>
-          }
-        />
 
         <Route
           path="/study/:deckId"
