@@ -34,6 +34,37 @@ export default function StudyPage() {
   const question = card.question;
   const parts = question.split("_");
 
+  //POST STUDENTS RESPONSES TO THE STUDENT_RESPONSES TABLE BACKEND
+  const handleSubmit = async () => {
+    const token = localStorage.getItem("token");
+
+    const body = {
+      card_id: card.id,
+      deck_id: deckId,
+      student_answer: input,
+      is_correct: input.trim() === card.answer.trim(), // check whether answer correct or not
+    };
+
+    try {
+      const res = await fetch("http://localhost:3000/responses", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+      console.log("Saved:", data);
+
+      // reveal the answer
+      setShowAnswer(true);
+    } catch (err) {
+      console.error("Error saving response:", err);
+    }
+  };
+
   const nextCard = () => {
     if (cards.length === 0) return;
     setShowAnswer(false);
@@ -77,10 +108,7 @@ export default function StudyPage() {
 
         {/* SHOW ANSWER BUTTON */}
         {!showAnswer && (
-          <button
-            onClick={() => setShowAnswer(true)}
-            style={{ margin: "10px" }}
-          >
+          <button onClick={handleSubmit} style={{ margin: "10px" }}>
             submit
           </button>
         )}
