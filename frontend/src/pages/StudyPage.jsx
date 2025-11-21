@@ -32,18 +32,24 @@ export default function StudyPage() {
 
   const card = cards[index];
 
-  //TODO: write next card function
-  //TODO: write skip card function
+  const nextCard = () => {
+    if (cards.length === 0) return;
+    setShowAnswer(false);
+    setIndex((current) => (current + 1) % cards.length);
+  };
+  const skipCard = () => {
+    if (cards.length === 0) return;
+    setShowAnswer(false);
+    setIndex((current) => (current + 1) % cards.length);
+  };
 
   return (
     <div>
       {/* TOP BAR */}
       <div>
-        <button>skip</button>
-        {/* TODO: ADD SKIP FUNCTION TO THIS */}
+        <button onClick={skipCard}>skip</button>
 
-        {showAnswer && <button>next</button>}
-        {/* TODO: ADD NEXT FUNCTION TO THIS */}
+        {showAnswer && <button onClick={nextCard}>next</button>}
       </div>
 
       {/* MAIN CONTENT */}
