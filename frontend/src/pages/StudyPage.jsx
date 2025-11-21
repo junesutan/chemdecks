@@ -6,7 +6,7 @@ export default function StudyPage() {
 
   const [cards, setCards] = useState([]);
   const [index, setIndex] = useState(0);
-
+  const [input, setInput] = useState("");
   const [showAnswer, setShowAnswer] = useState(false);
 
   useEffect(() => {
@@ -31,6 +31,8 @@ export default function StudyPage() {
   if (cards.length === 0) return <p>no cards in this deck...</p>;
 
   const card = cards[index];
+  const question = card.question;
+  const parts = question.split("_");
 
   const nextCard = () => {
     if (cards.length === 0) return;
@@ -55,7 +57,19 @@ export default function StudyPage() {
       {/* MAIN CONTENT */}
       <div>
         {/* QUESTION BOX */}
-        <div>{card.question}</div>
+        <div>
+          {parts[0]}
+          {showAnswer ? (
+            <strong>{card.answer}</strong>
+          ) : (
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            ></input>
+          )}
+          {parts[1]}
+        </div>
 
         {/* SHOW ANSWER BUTTON */}
         {!showAnswer && (
