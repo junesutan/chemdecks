@@ -6,6 +6,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import CreateDeck from "./pages/CreateDeck";
 import CreateCards from "./pages/CreateCardsPage";
 import SolveCardPage from "./pages/StudentSolveCardPage";
+import StudyPage from "./pages/StudyPage";
 
 function App() {
   return (
@@ -47,6 +48,15 @@ function App() {
           element={
             <ProtectedRoute allowedRole="student">
               <SolveCardPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/study/:deckId"
+          element={
+            <ProtectedRoute allowedRole="student">
+              <StudyPage />
             </ProtectedRoute>
           }
         />
