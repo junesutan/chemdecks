@@ -8,7 +8,7 @@ export default function StudentDashboard() {
   const [student] = useState({ name: "Rachel Lim", weeklyRank: 5 });
   const [homework] = useState({
     chapter: "Acids and Bases",
-    deckId: 21,
+    deckId: 33,
     title: "Strong Acid vs. Weak Acid",
     cardCount: 24,
   });
