@@ -8,7 +8,7 @@ export default function StudentDashboard() {
     async function loadStudent() {
       const token = localStorage.getItem("token");
 
-      const res = await fetch("http://localhost:3000/students/me", {
+      const res = await fetch("http://localhost:3000/students/me/profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

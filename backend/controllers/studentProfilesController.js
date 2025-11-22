@@ -6,7 +6,21 @@ exports.getMyProfile = async (req, res) => {
     const userId = req.user.id;
 
     const result = await pool.query(
-      `SELECT * FROM student_profiles WHERE user_id = $1`,
+      `SELECT 
+         student_profiles.id,
+         student_profiles.user_id,
+         student_profiles.weekly_points,
+         student_profiles.total_points,
+         student_profiles.weekly_rank,
+         student_profiles.streak,
+         student_profiles.created_at,
+         student_profiles.updated_at,
+         users.name,
+         users.email
+       FROM student_profiles
+       JOIN users 
+         ON users.id = student_profiles.user_id
+       WHERE student_profiles.user_id = $1`,
       [userId]
     );
 
