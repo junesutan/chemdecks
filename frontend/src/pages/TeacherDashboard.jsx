@@ -3,8 +3,11 @@ import { useNavigate } from "react-router-dom";
 
 export default function TeacherDashboard() {
   console.log("🔵 TeacherDashboard RENDERED");
-
-  const navigate = useNavigate(); // ✅ Correct place
+  const [showAssignModal, setShowAssignModal] = useState(false);
+  const [selectedDeck, setSelectedDeck] = useState(null);
+  const [students, setStudents] = useState([]);
+  const [selectedStudents, setSelectedStudents] = useState([]);
+  const navigate = useNavigate();
   const [decks, setDecks] = useState([]);
   const token = localStorage.getItem("token");
 
@@ -35,6 +38,27 @@ export default function TeacherDashboard() {
 
     if (token) fetchDecks();
   }, [token]);
+
+  const openAssignModal = async (deck) => {
+    const token = localStorage.getItem("token");
+
+    // Save which deck is being assigned
+    setSelectedDeck(deck);
+    setShowAssignModal(true);
+
+    try {
+      // Fetch student list
+      const res = await fetch("http://localhost:3000/users/students", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const data = await res.json();
+      setStudents(data); // Save array of students
+      setSelectedStudents([]); // Clear previous selection
+    } catch (err) {
+      console.log("Failed to load students:", err);
+    }
+  };
 
   return (
     <div
@@ -79,9 +103,42 @@ export default function TeacherDashboard() {
                 borderRadius: "8px",
                 marginBottom: "15px",
                 fontSize: "20px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
-              {deck.title}
+              <span>{deck.title}</span>
+
+              <div style={{ display: "flex", gap: "10px" }}>
+                <button
+                  onClick={() => navigate(`/edit-deck/${deck.id}`)}
+                  style={{
+                    padding: "6px 12px",
+                    background: "#444",
+                    border: "none",
+                    borderRadius: "6px",
+                    color: "white",
+                    cursor: "pointer",
+                  }}
+                >
+                  Edit
+                </button>
+
+                <button
+                  onClick={() => openAssignModal(deck)}
+                  style={{
+                    padding: "6px 12px",
+                    background: "#ff4d79",
+                    border: "none",
+                    borderRadius: "6px",
+                    color: "white",
+                    cursor: "pointer",
+                  }}
+                >
+                  Assign
+                </button>
+              </div>
             </li>
           ))}
         </ul>
