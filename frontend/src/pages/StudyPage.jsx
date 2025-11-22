@@ -7,6 +7,7 @@ export default function StudyPage() {
   const [cards, setCards] = useState([]);
   const [index, setIndex] = useState(0);
   const [input, setInput] = useState("");
+  const [message, setMessage] = useState("");
   const [showAnswer, setShowAnswer] = useState(false);
 
   useEffect(() => {
@@ -33,16 +34,25 @@ export default function StudyPage() {
   const card = cards[index];
   const question = card.question;
   const parts = question.split("_");
+  const progressPercentage = cards.length //calculating the progress % of the progress bar bar
+    ? Math.min(100, ((index + 1) / cards.length) * 100)
+    : 0;
 
   //POST STUDENTS RESPONSES TO THE STUDENT_RESPONSES TABLE BACKEND
   const handleSubmit = async () => {
+    if (input.trim() === "") {
+      setMessage("Please enter a valid input or click 'skip'.");
+      return;
+    }
+
     const token = localStorage.getItem("token");
 
     const body = {
       card_id: card.id,
       deck_id: deckId,
       student_answer: input,
-      is_correct: input.trim() === card.answer.trim(), // check whether answer correct or not
+      is_correct:
+        input.trim().toLowerCase() === card.answer.trim().toLowerCase(), // check whether answer correct or not
     };
 
     try {
@@ -57,6 +67,8 @@ export default function StudyPage() {
 
       const data = await res.json();
       console.log("Saved:", data);
+      setMessage("");
+      setInput("");
 
       // reveal the answer
       setShowAnswer(true);
@@ -90,7 +102,7 @@ export default function StudyPage() {
       {/* MAIN CONTENT */}
       <div>
         {/* QUESTION BOX */}
-        <div style={{ margin: "10px" }}>
+        <div style={{ margin: "10px", width: "500px" }}>
           {parts[0]}
           {showAnswer ? (
             <strong style={{ textDecoration: "underline" }}>
@@ -101,10 +113,15 @@ export default function StudyPage() {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSubmit();
+              }}
             ></input>
           )}
+
           {parts[1]}
         </div>
+        {message && <p style={{ color: "red", fontSize: "11px" }}>{message}</p>}
 
         {/* SHOW ANSWER BUTTON */}
         {!showAnswer && (
@@ -114,6 +131,7 @@ export default function StudyPage() {
         )}
 
         {/* FEEDBACK BOX */}
+
         {showAnswer && (
           <div>
             <strong>Feedback:</strong>{" "}
@@ -123,13 +141,41 @@ export default function StudyPage() {
           </div>
         )}
 
-        {/* PROGRESS BAR */}
-        <div>
-          <p>Progress</p>
-          <div>
-            <div>
-              {index + 1} of {cards.length}
+        <div
+          style={{
+            padding: "20px 0",
+            boxSizing: "border-box",
+          }}
+        >
+          <p style={{ margin: "0 0 6px" }}>Progress</p>
+
+          <div
+            style={{
+              padding: "0 10px 0 10px",
+              boxSizing: "border-box",
+            }}
+          >
+            <div
+              style={{
+                width: "100%",
+                height: "10px",
+                backgroundColor: "#e0e0e0",
+                borderRadius: "4px",
+                overflow: "hidden",
+                margin: "10px 0",
+              }}
+            >
+              <div
+                style={{
+                  width: `${progressPercentage}%`,
+                  height: "100%",
+                  backgroundColor: "#4caf50",
+                }}
+              ></div>
             </div>
+          </div>
+          <div style={{ marginTop: "6px", fontSize: "12px" }}>
+            {index + 1} of {cards.length}
           </div>
         </div>
       </div>
