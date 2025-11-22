@@ -58,3 +58,19 @@ exports.loginUser = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.getAllStudents = async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT users.id, users.name, users.email
+       FROM users
+       WHERE users.role = 'student'
+       ORDER BY users.name ASC`
+    );
+    console.log("result: ", result);
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error loading students:", err);
+    res.status(500).json({ error: err.message });
+  }
+};

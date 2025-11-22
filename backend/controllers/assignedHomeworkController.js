@@ -3,19 +3,22 @@ const pool = require("../db/db");
 // POST /assignments
 exports.assignHomework = async (req, res) => {
   try {
-    const teacherId = req.user.id; // id of the teacher assigning
+    const teacherId = req.user.id;
     const { student_id, deck_id, due_date } = req.body;
 
-    const result = await pool.query(
-      `INSERT INTO assigned_homework (teacher_id, student_id, deck_id, due_date)
-       VALUES ($1, $2, $3, $4)
-       ON CONFLICT (student_id, deck_id) DO NOTHING
-       RETURNING *`,
-      [teacherId, student_id, deck_id, due_date]
-    );
+    // Loop through ALL selected students
+    for (const studentId of student_id) {
+      await pool.query(
+        `INSERT INTO assigned_homework (teacher_id, student_id, deck_id, due_date)
+         VALUES ($1, $2, $3, $4)
+         ON CONFLICT (student_id, deck_id) DO NOTHING`,
+        [teacherId, studentId, deck_id, due_date]
+      );
+    }
 
-    res.json(result.rows[0] || { message: "Already assigned" });
+    res.json({ message: "Homework assigned successfully" });
   } catch (err) {
+    console.error("Assign homework error:", err);
     res.status(500).json({ error: err.message });
   }
 };
