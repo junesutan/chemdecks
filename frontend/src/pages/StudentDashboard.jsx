@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function StudentDashboard() {
   const navigate = useNavigate();
+  const [student, setStudent] = useState(null);
 
   useEffect(() => {
     async function loadStudent() {
@@ -15,14 +16,14 @@ export default function StudentDashboard() {
       });
 
       const data = await res.json();
-      // setStudent(data);
+      setStudent(data);
       console.log("student data:", data);
     }
     loadStudent();
   }, []);
 
   // temp mock data
-  const [student] = useState({ name: "Rachel Lim", weeklyRank: 5 });
+
   const [homework] = useState({
     chapter: "Acids and Bases",
     deckId: 33,
@@ -48,7 +49,7 @@ export default function StudentDashboard() {
 
       {/* Main */}
       <main style={{ flex: 1, padding: 30 }}>
-        <h1 style={{ marginBottom: 5 }}>Welcome back, {student.name}!</h1>
+        <h1 style={{ marginBottom: 5 }}>Welcome back, {student?.name}!</h1>
         <p style={{ marginBottom: 30 }}>Nice to have you back!</p>
 
         {/* Homework */}
@@ -130,9 +131,9 @@ export default function StudentDashboard() {
             }}
           ></div>
 
-          <h3 style={{ marginBottom: 10 }}>{student.name}</h3>
+          <h3 style={{ marginBottom: 10 }}>{student?.name}</h3>
           <p style={{ fontSize: 14 }}>
-            <strong>Position this week:</strong> {student.weeklyRank}
+            <strong>Position this week:</strong> {student?.weekly_rank}
           </p>
         </div>
       </aside>
