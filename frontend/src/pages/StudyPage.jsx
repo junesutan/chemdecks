@@ -88,13 +88,34 @@ export default function StudyPage() {
     setIndex((current) => (current + 1) % cards.length);
   };
 
+  const goBack = () => {
+    setIndex((current) => Math.max(0, current - 1)); // never become negative
+  };
+
   return (
-    <div style={{ outline: "solid" }}>
-      {/* TOP BAR */}
-      <div>
-        <button onClick={skipCard} style={{ margin: "10px" }}>
-          skip
+    <div
+      style={{
+        outline: "solid",
+        padding: "10px",
+      }}
+    >
+      {/* TOP BAR WITH BACK SKIP NEXT BUTTONS */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          margin: "10px",
+        }}
+      >
+        <button onClick={goBack} style={{ margin: "10px" }}>
+          back
         </button>
+
+        {!showAnswer && (
+          <button onClick={skipCard} style={{ margin: "10px" }}>
+            skip
+          </button>
+        )}
 
         {showAnswer && <button onClick={nextCard}>next</button>}
       </div>
@@ -102,7 +123,13 @@ export default function StudyPage() {
       {/* MAIN CONTENT */}
       <div>
         {/* QUESTION BOX */}
-        <div style={{ margin: "10px", width: "500px" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            margin: "10px",
+          }}
+        >
           {parts[0]}
           {showAnswer ? (
             <strong style={{ textDecoration: "underline" }}>
@@ -123,7 +150,7 @@ export default function StudyPage() {
         </div>
         {message && <p style={{ color: "red", fontSize: "11px" }}>{message}</p>}
 
-        {/* SHOW ANSWER BUTTON */}
+        {/* SUBMIT BUTTON */}
         {!showAnswer && (
           <button onClick={handleSubmit} style={{ margin: "10px" }}>
             submit

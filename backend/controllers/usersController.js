@@ -1,6 +1,7 @@
 const pool = require("../db/db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { createProfileForNewUser } = require("./studentProfilesController");
 
 exports.registerUser = async (req, res) => {
   try {
@@ -17,6 +18,7 @@ exports.registerUser = async (req, res) => {
     );
 
     res.json(result.rows[0]);
+    await createProfileForNewUser(newUser.id);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

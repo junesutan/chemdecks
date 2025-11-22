@@ -1,8 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function StudentDashboard() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    async function loadStudent() {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch("http://localhost:3000/students/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+      // setStudent(data);
+      console.log("student data:", data);
+    }
+    loadStudent();
+  }, []);
 
   // temp mock data
   const [student] = useState({ name: "Rachel Lim", weeklyRank: 5 });
