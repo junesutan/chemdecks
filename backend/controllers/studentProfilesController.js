@@ -1,37 +1,46 @@
 const pool = require("../db/db");
 
-// GET: logged-in student's profile
-exports.getMyProfile = async (req, res) => {
+// GET full student profile + assigned homework
+exports.getStudentProfileWithHomework = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const studentId = req.user.id;
 
-    const result = await pool.query(
-      `SELECT 
-         student_profiles.id,
-         student_profiles.user_id,
-         student_profiles.weekly_points,
-         student_profiles.total_points,
-         student_profiles.weekly_rank,
-         student_profiles.streak,
-         student_profiles.created_at,
-         student_profiles.updated_at,
-         users.name,
-         users.email
-       FROM student_profiles
-       JOIN users 
-         ON users.id = student_profiles.user_id
-       WHERE student_profiles.user_id = $1`,
-      [userId]
+    // [1] fetch basic student profile
+    const profileQuery = await pool.query(
+      `SELECT sp.id, sp.weekly_points, sp.total_points, sp.weekly_rank, sp.streak,
+              u.name, u.email
+       FROM student_profiles sp
+       JOIN users u ON sp.user_id = u.id
+       WHERE sp.user_id = $1`,
+      [studentId]
     );
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: "Profile not found" });
-    }
+    const profile = profileQuery.rows[0];
 
-    res.json(result.rows[0]);
+    // [2] Fetch assigned homework
+    const homeworkQuery = await pool.query(
+      `SELECT ah.id AS assignment_id,
+              ah.deck_id,
+              ah.assigned_at,
+              d.title AS deck_title,
+              d.description AS deck_description
+       FROM assigned_homework ah
+       JOIN decks d ON ah.deck_id = d.id
+       WHERE ah.student_id = $1
+       ORDER BY ah.assigned_at DESC`,
+      [studentId]
+    );
+
+    const homework = homeworkQuery.rows;
+
+    // [3] Combine into response
+    res.json({
+      ...profile,
+      homework,
+    });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
+    console.error("Error in getStudentProfileWithHomework:", err);
+    res.status(500).json({ error: "Server error" });
   }
 };
 

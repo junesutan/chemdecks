@@ -1,0 +1,20 @@
+meta {
+  name: student access assigned homework
+  type: http
+  seq: 11
+}
+
+get {
+  url: http://localhost:3000/students/me/profile
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqdW5lQGdtYWlsLmNvbSIsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNzYzNzk4Nzk5LCJleHAiOjE3NjM4ODUxOTl9.6HmfUxA_QQZ-xvf39nZLRpOBV0JFwp1OrJO_fUj4xXs
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

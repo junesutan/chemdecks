@@ -5,16 +5,15 @@ export default function StudentDashboard() {
   const navigate = useNavigate();
   const [student, setStudent] = useState(null);
 
+  //RETRIEVE STUDENT PROFILE INCLUDING HOMEWORK
   useEffect(() => {
     async function loadStudent() {
       const token = localStorage.getItem("token");
-
       const res = await fetch("http://localhost:3000/students/me/profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
       const data = await res.json();
       setStudent(data);
       console.log("student data:", data);
@@ -24,12 +23,12 @@ export default function StudentDashboard() {
 
   // temp mock data
 
-  const [homework] = useState({
-    chapter: "Acids and Bases",
-    deckId: 33,
-    title: "Strong Acid vs. Weak Acid",
-    cardCount: 24,
-  });
+  // const [homework] = useState({
+  //   chapter: "Acids and Bases",
+  //   deckId: 33,
+  //   title: "Strong Acid vs. Weak Acid",
+  //   cardCount: 24,
+  // });
   const [leaderboard] = useState([
     { rank: 1, username: "@eenie", score: 1400 },
     { rank: 2, username: "@meenie", score: 1200 },
@@ -54,36 +53,40 @@ export default function StudentDashboard() {
 
         {/* Homework */}
         <h2>This week’s homework</h2>
-        <p>{homework.chapter}</p>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            padding: 20,
-            border: "1px solid #ddd",
-            borderRadius: 10,
-            maxWidth: 500,
-          }}
-        >
-          <div style={{ width: 100, height: 100 }}></div>
+        {student?.homework?.length === 0 && <p>No homework assigned yet.</p>}
 
-          <div style={{ flex: 1 }}>
-            <h3>{homework.title}</h3>
-            <p>{homework.cardCount} cards</p>
+        {student?.homework?.map((hw) => (
+          <div
+            key={hw.assignment_id}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              padding: 20,
+              border: "1px solid #ddd",
+              borderRadius: 10,
+              maxWidth: 500,
+              marginBottom: 20,
+            }}
+          >
+            <div style={{ width: 100, height: 100 }}></div>
 
-            <button
-              onClick={() => navigate(`/study/${homework.deckId}`)}
-              style={{
-                padding: "8px 16px",
-                border: "1px solid #333",
-                cursor: "pointer",
-              }}
-            >
-              start now
-            </button>
+            <div style={{ flex: 1 }}>
+              <h3>{hw.deck_title}</h3>
+              <p>{hw.deck_description}</p>
+
+              <button
+                onClick={() => navigate(`/study/${hw.deck_id}`)}
+                style={{
+                  padding: "8px 16px",
+                  border: "1px solid #333",
+                  cursor: "pointer",
+                }}
+              >
+              </button>
+            </div>
           </div>
-        </div>
+        ))}
 
         {/* Leaderboard */}
         <div

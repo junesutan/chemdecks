@@ -3,11 +3,12 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 
 const {
-  getMyProfile,
+  getStudentProfileWithHomework,
   updateMyProfile,
 } = require("../controllers/studentProfilesController");
 
-router.get("/me/profile", auth, getMyProfile);
+// GET /students/me/profile
+router.get("/me/profile", auth, getStudentProfileWithHomework);
 router.patch("/me/profile", auth, updateMyProfile);
 
 module.exports = router;

@@ -188,7 +188,6 @@ export default function TeacherDashboard() {
             }}
           >
             <h2>Assign: {selectedDeck?.title}</h2>
-
             <div
               style={{
                 maxHeight: "250px",
@@ -216,7 +215,7 @@ export default function TeacherDashboard() {
                 </label>
               ))}
             </div>
-
+            {/* ASSIGN TO SELECTED STUDENTS BUTTON IN MODAL */}
             <button
               onClick={async () => {
                 await fetch("http://localhost:3000/assignments", {
@@ -244,9 +243,9 @@ export default function TeacherDashboard() {
                 cursor: "pointer",
               }}
             >
-              Assign to {selectedStudents.length} Selected Students
+              Assign to {selectedStudents.length} Selected{" "}
+              {selectedStudents.length === 1 ? "Student" : "Students"}
             </button>
-
             <button
               onClick={() => setShowAssignModal(false)}
               style={{
