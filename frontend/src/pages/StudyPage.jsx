@@ -116,8 +116,10 @@ export default function StudyPage() {
         {/* FEEDBACK BOX */}
         {showAnswer && (
           <div>
-            <strong>Feedback:</strong> {card.feedback_if_right}
-            {/* TODO: HANDLE FEEDBACK IF CORRECT OR INCORRECT */}
+            <strong>Feedback:</strong>{" "}
+            {input.trim() === (card.answer ?? "").trim()
+              ? card.feedback_if_right
+              : card.feedback_if_wrong}
           </div>
         )}
 
