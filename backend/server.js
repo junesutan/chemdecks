@@ -23,6 +23,7 @@ app.use("/cards", require("./routes/cards.js"));
 app.use("/responses", require("./routes/responses.js"));
 const studentProfilesRouter = require("./routes/studentProfiles.js");
 app.use("/students", studentProfilesRouter);
+app.use("/assignments", require("./routes/assignedHomework"));
 
 // start server
 app.listen(PORT, () => {

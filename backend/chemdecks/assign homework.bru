@@ -1,0 +1,29 @@
+meta {
+  name: assign homework
+  type: http
+  seq: 9
+}
+
+post {
+  url: http://localhost:3000/assignments
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoidGltQHNjaG9vbC5jb20iLCJyb2xlIjoidGVhY2hlciIsImlhdCI6MTc2Mzc5OTk3OCwiZXhwIjoxNzYzODg2Mzc4fQ.18sRAnt8whndGPDDmOZhdB7dqVgZ-PFwzkYnI6yQgbM
+}
+
+body:json {
+  {
+    "student_id": 10,
+    "deck_id": 33,
+    "due_date": "2025-11-25"
+  }
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
