@@ -6,11 +6,13 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import CreateDeck from "./pages/CreateDeck";
 import CreateCards from "./pages/CreateCardsPage";
 import StudyPage from "./pages/StudyPage";
+import SignUpPage from "./pages/SignUpPage";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/signup" element={<SignUpPage />} />
         <Route path="/" element={<LoginPage />} />
 
         <Route

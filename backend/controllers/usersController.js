@@ -8,8 +8,10 @@ exports.registerUser = async (req, res) => {
     console.log("REQ BODY =", req.body);
     const { name, email, password, role } = req.body;
 
+    // 1. Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // 2. Insert user
     const result = await pool.query(
       `INSERT INTO users (name, email, password_hash, role)
        VALUES ($1, $2, $3, $4)
@@ -17,9 +19,17 @@ exports.registerUser = async (req, res) => {
       [name, email, hashedPassword, role || "student"]
     );
 
-    res.json(result.rows[0]);
-    await createProfileForNewUser(newUser.id);
+    const newUser = result.rows[0];
+
+    // 3. Only create student profile for students
+    if (newUser.role === "student") {
+      await createProfileForNewUser(newUser.id);
+    }
+
+    // 4. Send response LAST
+    res.json(newUser);
   } catch (err) {
+    console.error("Error in registerUser:", err);
     res.status(500).json({ error: err.message });
   }
 };
