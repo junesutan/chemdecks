@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function StudyPage() {
   const { deckId } = useParams();
-
+  const navigate = useNavigate();
   const [cards, setCards] = useState([]);
   const [index, setIndex] = useState(0);
   const [input, setInput] = useState("");
   const [message, setMessage] = useState("");
   const [showAnswer, setShowAnswer] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
     //retrieve cards
@@ -39,22 +40,22 @@ export default function StudyPage() {
     : 0;
 
   //POST STUDENTS RESPONSES TO THE STUDENT_RESPONSES TABLE BACKEND
+
   const handleSubmit = async () => {
+    // 1. Validate input
     if (input.trim() === "") {
       setMessage("Please enter a valid input or click 'skip'.");
       return;
     }
 
     const token = localStorage.getItem("token");
+    const card = cards[index];
 
-    const body = {
-      card_id: card.id,
-      deck_id: deckId,
-      student_answer: input,
-      is_correct:
-        input.trim().toLowerCase() === card.answer.trim().toLowerCase(), // check whether answer correct or not
-    };
+    // 2. is it correct?
+    const correct =
+      input.trim().toLowerCase() === card.answer.trim().toLowerCase();
 
+    // 3. POST student response to backend
     try {
       const res = await fetch("http://localhost:3000/responses", {
         method: "POST",
@@ -62,26 +63,38 @@ export default function StudyPage() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(body),
+        body: JSON.stringify({
+          card_id: card.id,
+          deck_id: card.deck_id, // or use deckId from params
+          student_answer: input,
+          is_correct: correct,
+        }),
       });
 
       const data = await res.json();
-      console.log("Saved:", data);
-      setMessage("");
-      setInput("");
-
-      // reveal the answer
-      setShowAnswer(true);
+      console.log("Saved response:", data);
     } catch (err) {
-      console.error("Error saving response:", err);
+      console.error("Failed to POST student response:", err);
     }
+    //4. clear input after submit
+    setInput("");
+
+    // 5. end game if it's the last card
+    if (index === cards.length - 1) {
+      setIsFinished(true);
+      setShowAnswer(true);
+      return;
+    }
+
+    // 6.reveal answer
+    setShowAnswer(true);
   };
 
   const nextCard = () => {
-    if (cards.length === 0) return;
-    setShowAnswer(false);
-    setIndex((current) => (current + 1) % cards.length);
+    if (index < cards.length) setShowAnswer(false);
+    setIndex(index + 1);
   };
+
   const skipCard = () => {
     if (cards.length === 0) return;
     setShowAnswer(false);
@@ -107,17 +120,32 @@ export default function StudyPage() {
           margin: "10px",
         }}
       >
+        {/* BACK BUTTON */}
         <button onClick={goBack} style={{ margin: "10px" }}>
           back
         </button>
 
+        {/* SKIP BUTTON */}
         {!showAnswer && (
           <button onClick={skipCard} style={{ margin: "10px" }}>
             skip
           </button>
         )}
 
-        {showAnswer && <button onClick={nextCard}>next</button>}
+        {/* NEXT BUTTON becomes return to dashboard when it ends*/}
+        {showAnswer &&
+          (isFinished ? (
+            <button
+              onClick={() => navigate("/student")}
+              style={{ margin: "10px" }}
+            >
+              Return to Dashboard
+            </button>
+          ) : (
+            <button onClick={nextCard} style={{ margin: "10px" }}>
+              Next
+            </button>
+          ))}
       </div>
 
       {/* MAIN CONTENT */}
