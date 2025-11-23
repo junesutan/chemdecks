@@ -25,7 +25,7 @@ export default function CreateDeck() {
       const data = await res.json();
       navigate(`/decks/${data.id}/cards`); // ← GO TO CARD CREATION PAGE
     } else {
-      alert("Error creating deck");
+      console.log("error creating deck");
     }
   }
 

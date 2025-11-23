@@ -231,3 +231,188 @@
   color: #aaa;
   font-size: 15px;
 }
+
+/* ---------- STUDY PAGE LAYOUT ---------- */
+
+.study-container {
+  padding: 40px;
+  max-width: 900px;
+  margin: 0 auto;
+  color: #f2f2f2;
+  background: #111;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 20px rgba(255, 255, 0, 0.05);
+  margin-top: 30px;
+  max-width: 650px;
+}
+
+/* Top bar with back + skip */
+.study-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+/* Back / Skip buttons */
+.study-btn {
+  background: #000;
+  color: #fff;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s ease;
+  margin-top: 10px;
+}
+
+.study-btn:hover {
+  background: #03cffc;
+  color: #000;
+}
+
+/* Question card */
+.study-card {
+  background: #111;
+  padding: 28px 32px;
+  margin-bottom: 40px;
+}
+
+.study-question {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+/* Input field */
+.study-input {
+  background: #1c1c1c;
+  color: #fff;
+  border: 1px solid #333;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.study-input::placeholder {
+  color: #777;
+}
+
+/* Submit button */
+.study-submit {
+  background: #03cffc;
+  color: #000;
+  font-weight: 700;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  float: right;
+}
+
+.study-submit:hover {
+  background: #20accb;
+}
+
+/* ---------- PROGRESS SECTION ---------- */
+
+.progress-section {
+  margin-top: 40px;
+}
+
+.progress-label {
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+/* Outer bar */
+.progress-bar {
+  width: 100%;
+  height: 24px;
+  background: #2a2a2a;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+/* Green inner bar */
+.progress-fill {
+  height: 100%;
+  background: #4caf50;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+/* Progress text */
+.progress-text {
+  color: #ccc;
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+/* ---------- TEACHER DASHBOARD CONTAINER ---------- */
+.teacher-dashboard {
+  padding: 40px;
+  max-width: 900px;
+  margin: 0 auto;
+  color: #f2f2f2;
+}
+
+/* Header */
+.teacher-dashboard h1 {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 40px;
+}
+
+/* ---------- CREATE BUTTON ---------- */
+.create-deck-btn {
+  background: #03cffc;
+  color: #000;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 40px;
+  transition: 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.create-deck-btn:hover {
+  background: #02b1d8;
+}
+
+/* ---------- SEPARATOR HEADINGS ---------- */
+.teacher-section-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+/* ---------- DECK LIST CARD ---------- */
+.teacher-card {
+  background: #1111118d;
+  padding: 24px 32px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 20px;
+  transition: 0.2s;
+}
+
+.teacher-card:hover {
+  background: #161616;
+}
+
+/* Text inside empty state */
+.dashboard-empty {
+  color: #bbb;
+  font-size: 16px;
+}

@@ -106,28 +106,17 @@ export default function StudyPage() {
   };
 
   return (
-    <div
-      style={{
-        outline: "solid",
-        padding: "10px",
-      }}
-    >
+    <div className="study-container">
       {/* TOP BAR WITH BACK SKIP NEXT BUTTONS */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          margin: "10px",
-        }}
-      >
+      <div className="study-topbar">
         {/* BACK BUTTON */}
-        <button onClick={goBack} style={{ margin: "10px" }}>
+        <button className="study-btn" onClick={goBack}>
           back
         </button>
 
         {/* SKIP BUTTON */}
         {!showAnswer && (
-          <button onClick={skipCard} style={{ margin: "10px" }}>
+          <button className="study-btn" onClick={skipCard}>
             skip
           </button>
         )}
@@ -136,28 +125,22 @@ export default function StudyPage() {
         {showAnswer &&
           (isFinished ? (
             <button
+              className="study-submit"
               onClick={() => navigate("/student")}
-              style={{ margin: "10px" }}
             >
               Return to Dashboard
             </button>
           ) : (
-            <button onClick={nextCard} style={{ margin: "10px" }}>
+            <button className="study-btn" onClick={nextCard}>
               Next
             </button>
           ))}
       </div>
 
       {/* MAIN CONTENT */}
-      <div>
+      <div className="study-card">
         {/* QUESTION BOX */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            margin: "10px",
-          }}
-        >
+        <div className="study-question">
           {parts[0]}
           {showAnswer ? (
             <strong style={{ textDecoration: "underline" }}>
@@ -165,9 +148,13 @@ export default function StudyPage() {
             </strong>
           ) : (
             <input
+              className="study-input"
               type="text"
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={(e) => {
+                setInput(e.target.value);
+                setMessage(""); //clear message
+              }}
               onKeyDown={(e) => {
                 if (e.key === "Enter") handleSubmit();
               }}
@@ -180,7 +167,7 @@ export default function StudyPage() {
 
         {/* SUBMIT BUTTON */}
         {!showAnswer && (
-          <button onClick={handleSubmit} style={{ margin: "10px" }}>
+          <button onClick={handleSubmit} className="study-submit">
             submit
           </button>
         )}
@@ -196,20 +183,10 @@ export default function StudyPage() {
           </div>
         )}
 
-        <div
-          style={{
-            padding: "20px 0",
-            boxSizing: "border-box",
-          }}
-        >
-          <p style={{ margin: "0 0 6px" }}>Progress</p>
+        <div className="progress-section">
+          <p className="progress-label">Progress</p>
 
-          <div
-            style={{
-              padding: "0 10px 0 10px",
-              boxSizing: "border-box",
-            }}
-          >
+          <div className="progress-bar">
             <div
               style={{
                 width: "100%",
@@ -221,15 +198,12 @@ export default function StudyPage() {
               }}
             >
               <div
-                style={{
-                  width: `${progressPercentage}%`,
-                  height: "100%",
-                  backgroundColor: "#4caf50",
-                }}
+                className="progress-fill"
+                style={{ width: `${progressPercentage}%` }}
               ></div>
             </div>
           </div>
-          <div style={{ marginTop: "6px", fontSize: "12px" }}>
+          <div className="progress-text">
             {index + 1} of {cards.length}
           </div>
         </div>

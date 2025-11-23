@@ -62,98 +62,40 @@ export default function TeacherDashboard() {
     }
   };
 
-  //     async function loadStudent() {
-  //     const token = localStorage.getItem("token");
-
-  //     const res = await fetch("http://localhost:3000/students/me/profile", {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-
-  //     const data = await res.json();
-  //     setStudent(data);
-  //     console.log("student data:", data);
-  //   }
-  //   loadStudent();
-  // }, []);
-
   return (
     <div>
-      <div
-        style={{
-          padding: "40px",
-          color: "white",
-          background: "#121212",
-          minHeight: "100vh",
-        }}
-      >
-        <h1 style={{ fontSize: "48px", marginBottom: "20px" }}>
-          Teacher Dashboard
-        </h1>
+      <div className="teacher-dashboard">
+        <h1>Teacher Dashboard</h1>
 
         <button
+          className="create-deck-btn"
           onClick={() => navigate("/create-deck")}
-          style={{
-            padding: "12px 20px",
-            fontSize: "18px",
-            background: "#ff69b4",
-            border: "none",
-            cursor: "pointer",
-            borderRadius: "6px",
-            marginBottom: "30px",
-          }}
         >
-          ➕ Create New Deck
+          + Create New Deck
         </button>
 
-        <h2 style={{ fontSize: "28px", marginBottom: "10px" }}>Your Decks</h2>
+        <h2 className="teacher-section-title">Your Decks</h2>
 
         {decks.length === 0 ? (
-          <p>No decks yet. Create your first one!</p>
+          <p className="dashboard-empty">
+            No decks yet. Create your first one!
+          </p>
         ) : (
           <ul style={{ listStyle: "none", padding: 0 }}>
             {decks.map((deck) => (
-              <li
-                key={deck.id}
-                style={{
-                  background: "#1e1e1e",
-                  padding: "20px",
-                  borderRadius: "8px",
-                  marginBottom: "15px",
-                  fontSize: "20px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
+              <li key={deck.id} className="teacher-card">
                 <span>{deck.title}</span>
-
                 <div style={{ display: "flex", gap: "10px" }}>
                   <button
                     onClick={() => navigate(`/edit-deck/${deck.id}`)}
-                    style={{
-                      padding: "6px 12px",
-                      background: "#444",
-                      border: "none",
-                      borderRadius: "6px",
-                      color: "white",
-                      cursor: "pointer",
-                    }}
+                    className="study-btn"
                   >
                     Edit
                   </button>
 
                   <button
                     onClick={() => openAssignModal(deck)}
-                    style={{
-                      padding: "6px 12px",
-                      background: "#ff4d79",
-                      border: "none",
-                      borderRadius: "6px",
-                      color: "white",
-                      cursor: "pointer",
-                    }}
+                    className="study-btn"
                   >
                     Assign
                   </button>

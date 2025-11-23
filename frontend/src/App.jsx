@@ -7,6 +7,7 @@ import CreateDeck from "./pages/CreateDeck";
 import CreateCards from "./pages/CreateCardsPage";
 import StudyPage from "./pages/StudyPage";
 import SignUpPage from "./pages/SignUpPage";
+import EditDeckPage from "./pages/EditDeckPage";
 import "./App.css";
 
 function App() {
@@ -50,6 +51,15 @@ function App() {
           element={
             <ProtectedRoute allowedRole="student">
               <StudyPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/edit-deck/:deckId"
+          element={
+            <ProtectedRoute allowedRole="teacher">
+              <EditDeckPage />
             </ProtectedRoute>
           }
         />

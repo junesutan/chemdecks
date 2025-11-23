@@ -26,8 +26,25 @@ exports.registerUser = async (req, res) => {
       await createProfileForNewUser(newUser.id);
     }
 
-    // 4. Send response LAST
-    res.json(newUser);
+    // 4. Create TOKEN
+    const token = jwt.sign(
+      { id: newUser.id, role: newUser.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+    console.log("token", token);
+    console.log("res", res);
+
+    // 5. Send Response
+    res.json({
+      id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
+      role: newUser.role,
+      token: token,
+    });
+
+    navigate("/login");
   } catch (err) {
     console.error("Error in registerUser:", err);
     res.status(500).json({ error: err.message });
@@ -63,7 +80,13 @@ exports.loginUser = async (req, res) => {
       { expiresIn: "1d" }
     );
 
-    res.json({ message: "Login successful", token, role: user.role });
+    res.json({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      token: token,
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -35,4 +35,13 @@ router.get("/students", auth, async (req, res) => {
   }
 });
 
+router.get("/auth/me", auth, async (req, res) => {
+  const user = await pool.query(
+    `SELECT id, name, email, role FROM users WHERE id=$1`,
+    [req.user.id]
+  );
+
+  res.json(user.rows[0]);
+});
+
 module.exports = router;

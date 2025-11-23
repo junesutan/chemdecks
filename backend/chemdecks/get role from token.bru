@@ -1,0 +1,20 @@
+meta {
+  name: get role from token
+  type: http
+  seq: 13
+}
+
+get {
+  url: http://localhost:3000/auth/me
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZ…wODJ9.ZHbvIxkwxGnnI67jcvp_Rs5gZ7wZg83n1ZURktZlmlo
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
