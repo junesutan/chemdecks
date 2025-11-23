@@ -7,13 +7,14 @@ import CreateDeck from "./pages/CreateDeck";
 import CreateCards from "./pages/CreateCardsPage";
 import StudyPage from "./pages/StudyPage";
 import SignUpPage from "./pages/SignUpPage";
+import "./App.css";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
 
         <Route
           path="/student"

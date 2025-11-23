@@ -37,23 +37,41 @@ function LoginPage() {
   };
 
   return (
-    <form onSubmit={login}>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+    <div className="page-center">
+      <div className="signup-card">
+        <form
+          className="signup-form"
+          onSubmit={login}
+          style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+        >
+          <label>
+            Email
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </label>
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+          <label>
+            Password
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </label>
 
-      <button type="submit">Login</button>
-    </form>
+          <button type="submit">Login</button>
+
+          <div className="signup-footer">
+            Don’t have an account? <a href="/signup">Sign Up</a>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }
 

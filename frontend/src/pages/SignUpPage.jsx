@@ -43,46 +43,63 @@ export default function SignUpPage() {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "80px auto" }}>
-      <h1>Sign Up</h1>
+    <div className="page-center">
+      <div className="signup-card">
+        <h1>Sign Up</h1>
 
-      <form
-        onSubmit={handleSignup}
-        style={{ display: "flex", flexDirection: "column", gap: 10 }}
-      >
-        <input
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
+        <form
+          onSubmit={handleSignup}
+          style={{ display: "flex", flexDirection: "column", gap: 10 }}
+        >
+          <label>
+            Name
+            <input
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </label>
 
-        <input
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+            Email
+            <input
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </label>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+          <label>
+            Password
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </label>
 
-        <select value={role} onChange={(e) => setRole(e.target.value)}>
-          <option value="student">Student</option>
-          <option value="teacher">Teacher</option>
-        </select>
+          <label>
+            I'm signing up as a:
+            <select value={role} onChange={(e) => setRole(e.target.value)}>
+              <option value="student">Student</option>
+              <option value="teacher">Teacher</option>
+            </select>
+          </label>
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <button type="submit" style={{ padding: "10px 20px", marginTop: 10 }}>
-          Sign Up
-        </button>
-      </form>
+          <button type="submit" style={{ padding: "10px 20px", marginTop: 10 }}>
+            Sign Up
+          </button>
+
+          <div className="signup-footer">
+            Already have an account yet? <a href="/login">Log in</a> instead
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
