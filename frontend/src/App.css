@@ -290,12 +290,11 @@
   background: #1c1c1c;
   color: #fff;
   border: 1px solid #333;
-  padding: 12px;
+  padding: 10px;
   font-size: 16px;
   border-radius: 10px;
-  width: 100%;
-  margin-bottom: 10px;
-  margin-top: 10px;
+  width: 100px;
+  margin: 1px;
 }
 
 .study-input::placeholder {
