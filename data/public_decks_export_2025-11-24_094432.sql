@@ -1,0 +1,16 @@
+insert into "decks" ("description", "id", "title", "user_id") values (NULL, 21, 'acids and bases', 10);
+insert into "decks" ("description", "id", "title", "user_id") values (NULL, 22, 'separation techniques', 10);
+insert into "decks" ("description", "id", "title", "user_id") values ('understanding le charteliers principle', 23, 'chemical equilibrium', 10);
+insert into "decks" ("description", "id", "title", "user_id") values ('naming the pollutants and why they are harmful ', 24, 'Air & the Atmosphere ', 10);
+insert into "decks" ("description", "id", "title", "user_id") values ('test', 26, 'test ', 10);
+insert into "decks" ("description", "id", "title", "user_id") values ('test2', 27, 'test2', 10);
+insert into "decks" ("description", "id", "title", "user_id") values ('hello', 28, 'chapter 2', 10);
+insert into "decks" ("description", "id", "title", "user_id") values ('hiuh', 29, 'dguh', 10);
+insert into "decks" ("description", "id", "title", "user_id") values ('hgh', 30, 'ghg', 10);
+insert into "decks" ("description", "id", "title", "user_id") values ('hello', 31, 'asdasd', 10);
+insert into "decks" ("description", "id", "title", "user_id") values ('qweqeq', 32, 'asd', 10);
+insert into "decks" ("description", "id", "title", "user_id") values ('asdasd', 33, 'ads', 10);
+insert into "decks" ("description", "id", "title", "user_id") values ('abcde', 34, '12345', 10);
+insert into "decks" ("description", "id", "title", "user_id") values ('12345', 35, '12345', 23);
+insert into "decks" ("description", "id", "title", "user_id") values ('which is the best separation technique?', 20, 'experimental techniques', 10);
+insert into "decks" ("description", "id", "title", "user_id") values ('what happens when you change the conditions of reactions at equilibrium?', 25, 'chemical equilibrium', 10);
