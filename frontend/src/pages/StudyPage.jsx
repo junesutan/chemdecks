@@ -7,12 +7,12 @@ export default function StudyPage() {
   const [cards, setCards] = useState([]);
   const [index, setIndex] = useState(0);
   const [input, setInput] = useState("");
+  const [lastAnswer, setLastAnswer] = useState("");
   const [message, setMessage] = useState("");
   const [showAnswer, setShowAnswer] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
-    //retrieve cards
     async function loadCards() {
       const token = localStorage.getItem("token");
 
@@ -23,6 +23,7 @@ export default function StudyPage() {
           Authorization: `Bearer ${token}`,
         },
       });
+
       const data = await res.json();
       setCards(data);
       console.log(data);
@@ -35,14 +36,15 @@ export default function StudyPage() {
   const card = cards[index];
   const question = card.question;
   const parts = question.split("_");
-  const progressPercentage = cards.length //calculating the progress % of the progress bar bar
+
+  const progressPercentage = cards.length
     ? Math.min(100, ((index + 1) / cards.length) * 100)
     : 0;
 
-  //POST STUDENTS RESPONSES TO THE STUDENT_RESPONSES TABLE BACKEND
+  // Helper function for clean comparison
+  const isCorrect = (a, b) => a.trim().toLowerCase() === b.trim().toLowerCase();
 
   const handleSubmit = async () => {
-    // 1. Validate input
     if (input.trim() === "") {
       setMessage("Please enter a valid input or click 'skip'.");
       return;
@@ -51,11 +53,12 @@ export default function StudyPage() {
     const token = localStorage.getItem("token");
     const card = cards[index];
 
-    // 2. is it correct?
-    const correct =
-      input.trim().toLowerCase() === card.answer.trim().toLowerCase();
+    const correct = isCorrect(input, card.answer);
 
-    // 3. POST student response to backend
+    // ⭐ Save student's actual answer BEFORE clearing input
+    setLastAnswer(input);
+
+    // POST student response
     try {
       const res = await fetch("http://localhost:3000/responses", {
         method: "POST",
@@ -65,7 +68,7 @@ export default function StudyPage() {
         },
         body: JSON.stringify({
           card_id: card.id,
-          deck_id: card.deck_id, // or use deckId from params
+          deck_id: card.deck_id,
           student_answer: input,
           is_correct: correct,
         }),
@@ -76,22 +79,22 @@ export default function StudyPage() {
     } catch (err) {
       console.error("Failed to POST student response:", err);
     }
-    //4. clear input after submit
+
+    // Clear input AFTER saving lastAnswer
     setInput("");
 
-    // 5. end game if it's the last card
+    // Last card?
     if (index === cards.length - 1) {
       setIsFinished(true);
       setShowAnswer(true);
       return;
     }
 
-    // 6.reveal answer
     setShowAnswer(true);
   };
 
   const nextCard = () => {
-    if (index < cards.length) setShowAnswer(false);
+    setShowAnswer(false);
     setIndex(index + 1);
   };
 
@@ -102,26 +105,23 @@ export default function StudyPage() {
   };
 
   const goBack = () => {
-    setIndex((current) => Math.max(0, current - 1)); // never become negative
+    setIndex((current) => Math.max(0, current - 1));
   };
 
   return (
     <div className="study-container">
-      {/* TOP BAR WITH BACK SKIP NEXT BUTTONS */}
+      {/* TOP BAR */}
       <div className="study-topbar">
-        {/* BACK BUTTON */}
         <button className="study-btn" onClick={goBack}>
           back
         </button>
 
-        {/* SKIP BUTTON */}
         {!showAnswer && (
           <button className="study-btn" onClick={skipCard}>
             skip
           </button>
         )}
 
-        {/* NEXT BUTTON becomes return to dashboard when it ends*/}
         {showAnswer &&
           (isFinished ? (
             <button
@@ -137,11 +137,11 @@ export default function StudyPage() {
           ))}
       </div>
 
-      {/* MAIN CONTENT */}
+      {/* MAIN CARD */}
       <div className="study-card">
-        {/* QUESTION BOX */}
         <div className="study-question">
           {parts[0]}
+
           {showAnswer ? (
             <strong style={{ textDecoration: "underline" }}>
               {card.answer}
@@ -153,36 +153,36 @@ export default function StudyPage() {
               value={input}
               onChange={(e) => {
                 setInput(e.target.value);
-                setMessage(""); //clear message
+                setMessage("");
               }}
               onKeyDown={(e) => {
                 if (e.key === "Enter") handleSubmit();
               }}
-            ></input>
+            />
           )}
 
           {parts[1]}
         </div>
+
         {message && <p style={{ color: "red", fontSize: "11px" }}>{message}</p>}
 
-        {/* SUBMIT BUTTON */}
         {!showAnswer && (
           <button onClick={handleSubmit} className="study-submit">
             submit
           </button>
         )}
 
-        {/* FEEDBACK BOX */}
-
+        {/* FEEDBACK */}
         {showAnswer && (
           <div>
             <strong>Feedback:</strong>{" "}
-            {input.trim() === (card.answer ?? "").trim()
+            {isCorrect(lastAnswer, card.answer)
               ? card.feedback_if_right
               : card.feedback_if_wrong}
           </div>
         )}
 
+        {/* PROGRESS BAR */}
         <div className="progress-section">
           <p className="progress-label">Progress</p>
 
@@ -200,9 +200,10 @@ export default function StudyPage() {
               <div
                 className="progress-fill"
                 style={{ width: `${progressPercentage}%` }}
-              ></div>
+              />
             </div>
           </div>
+
           <div className="progress-text">
             {index + 1} of {cards.length}
           </div>
